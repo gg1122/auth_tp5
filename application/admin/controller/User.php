@@ -23,6 +23,9 @@ class User extends Base{
 	 */
 	public function changePwd(){
 		if(request()->isPost()){
+			if(session('user_auth')['uid'] == 1){
+				return $this->error('禁止修改管理员密码');
+			}
 			$oldPassword = input('?post.oldPassword') ? input('post.oldPassword') : '';
 			if(!$oldPassword){
 				return $this->error('请填写原密码');
@@ -95,9 +98,13 @@ class User extends Base{
 	 */
 	public function edit(){
 		if(request()->isPost()){
+			$id = input('?post.id') ? input('post.id') : '';
+			if(!$id || $id==1){
+				return $this->error('参数错误');
+			}
 			$user = new UserApi;
 			$data = ['username'=>input('post.username')];
-			$res = $user->updateInfoNotCheck(input('post.id'), $data);
+			$res = $user->updateInfoNotCheck($id, $data);
 			if($res['status']){
 				return $this->success('修改成功',url('index'));
 			}else{
