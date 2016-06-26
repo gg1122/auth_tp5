@@ -20,6 +20,7 @@
                         </thead>
                         <tbody>
                             {volist name="data" id="vo"}
+                            {notin name="vo.id" value="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17"}
                             <tr>
                                 <td align="center">{$vo.id}</td>
                                 <td align="left">
@@ -28,6 +29,7 @@
                                 <td align="left">{$vo.name}</td>
                                 <td align="center">{if $vo.type == 1}按节点{else}其他{/if}</td>
                                 <td align="center">
+                                    
                                     <a href="{:url('auth_rule/edit',['id'=>$vo['id']])}" class="btn btn-primary btn-sm shiny">
                                         <i class="fa fa-edit"></i> 编辑
                                     </a>
@@ -36,6 +38,7 @@
                                     </a>
                                 </td>
                             </tr>
+                            {/notin}
                             {/volist}
                         </tbody>
                     </table>

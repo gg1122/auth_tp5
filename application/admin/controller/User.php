@@ -105,7 +105,7 @@ class User extends Base{
 			}
 		}else{
 			$id = input('?get.id') ? input('get.id') : '';
-			if(!$id){
+			if(!$id || $id == 1){
 				return $this->error('参数错误');
 			}
 			$data = \think\Db::name('ucenter_member')->where('id',$id)->find();
@@ -122,7 +122,7 @@ class User extends Base{
 	 */
 	public function del(){
 		$id = input('?get.id') ? input('get.id') : '';
-		if(!$id){
+		if(!$id || $id == 1){
 			return $this->error('参数错误');
 		}
 		if(\think\Db::name('ucenter_member')->where('id',$id)->delete()){

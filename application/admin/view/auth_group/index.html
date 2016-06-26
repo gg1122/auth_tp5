@@ -16,6 +16,7 @@
                         </thead>
                         <tbody>
                             {volist name="roles" id="role"}
+                            {if condition="$role.id neq 1"}
                             <tr>
                                 <td align="center">{$role.id}</td>
                                 <td align="center">{$role.title}</td>
@@ -31,6 +32,7 @@
                                     </a>
                                 </td>
                             </tr>
+                            {/if}
                             {/volist}
                         </tbody>
                     </table>

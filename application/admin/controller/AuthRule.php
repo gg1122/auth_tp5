@@ -27,7 +27,11 @@ class AuthRule extends Base{
 	public function add(){
 		if(request()->isPost()){
 			$authRuleModel = new AuthRuleModel;
-			if($authRuleModel->validate(true)->save(input('post.'))){
+			if($id = $authRuleModel->validate(true)->save(input('post.'))){
+				// 给管理员添加全部权限
+				$authGroupData = \think\Db::name('auth_group')->field('rules')->where('id',1)->find();
+				$rules = $authGroupData['rules'] . ',' . $id;
+				\think\Db::name('auth_group')->where('id',1)->update(['rules'=>$rules]);
 				$this->getSidebar();
 				session('_auth_list_'.session('user_auth')['uid'].'1', null);
 				return $this->success('添加成功',url('index'));
@@ -52,8 +56,15 @@ class AuthRule extends Base{
 	 */
 	public function edit(){
 		if(request()->isPost()){
+			$id = input('?post.id') ? input('post.id') : '';
+			if(!$id){
+				return $this->error('参数错误');
+			}
+			if(in_array($id, explode(',', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'))){
+				return $this->error('改权限不允许编辑');
+			}
 			$authRuleModel = new AuthRuleModel;
-			if($authRuleModel->validate(true)->save(input('post.'), ['id'=>input('post.id')])){
+			if($authRuleModel->validate(true)->save(input('post.'), ['id'=>$id])){
 				$this->getSidebar();
 				session('_auth_list_'.session('user_auth')['uid'].'1', null);
 				return $this->success('修改成功',url('index'));
@@ -73,6 +84,27 @@ class AuthRule extends Base{
 			$this->assign('pidData', $pidData);			
 			$this->assign('data',$data);
 			return view('edit');
+		}
+	}
+
+	/**
+	 * 删除权限
+	 * @author ning
+	 * @DateTime 2016-06-26T11:12:01+0800
+	 * @return   [type]                   [description]
+	 */
+	public function del(){
+		$id = input('?get.id') ? input('get.id') : '';
+		if(!$id){
+			return $this->error('参数错误');
+		}
+		if(in_array($id, explode(',', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17'))){
+			return $this->error('改权限不允许编辑');
+		}
+		if(\think\Db::name('auth_rule')->where('id',$id)->delete()){
+			return $this->success('删除成功');
+		}else{
+			return $this->error('删除失败');
 		}
 	}
 

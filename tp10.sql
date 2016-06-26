@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50547
 File Encoding         : 65001
 
-Date: 2016-06-25 12:39:41
+Date: 2016-06-26 11:38:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,13 +28,13 @@ CREATE TABLE `auth_group` (
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of auth_group
 -- ----------------------------
-INSERT INTO `auth_group` VALUES ('1', '管理员', '1', '6,11,1,2,13,15,14,16,3,12,8,7,9,4,5,10', '', '0', '1466780039');
-INSERT INTO `auth_group` VALUES ('5', '初级管理员', '1', '11,6,1', '', '1466778569', '1466778618');
+INSERT INTO `auth_group` VALUES ('1', '管理员', '1', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17', '', '0', '1466780039');
+INSERT INTO `auth_group` VALUES ('6', '初级管理员', '1', '11,6', '初级管理员', '1466910557', '1466910596');
 
 -- ----------------------------
 -- Table structure for auth_group_access
@@ -68,17 +68,16 @@ CREATE TABLE `auth_rule` (
   `update_time` int(11) NOT NULL,
   `pid` mediumint(8) unsigned NOT NULL,
   `path` varchar(100) NOT NULL,
-  `sort` int(11) unsigned NOT NULL,
+  `sort` int(11) NOT NULL DEFAULT '0',
   `is_show` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否显示',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of auth_rule
 -- ----------------------------
 INSERT INTO `auth_rule` VALUES ('1', 'admin/main/index', '控制面板', '1', '1', '', '0', '0', '0', '0', '1', '1');
-INSERT INTO `auth_rule` VALUES ('2', '', '系统', '1', '1', '', '0', '0', '0', '0', '2', '1');
+INSERT INTO `auth_rule` VALUES ('2', '', '系统', '1', '1', '', '0', '1466909995', '0', '0', '200', '1');
 INSERT INTO `auth_rule` VALUES ('3', 'admin/auth_group/index', '角色管理', '1', '1', '', '0', '0', '2', '0-2', '1', '1');
 INSERT INTO `auth_rule` VALUES ('4', 'admin/auth_rule/index', '权限列表', '1', '1', '', '0', '1466746258', '2', '0-2', '2', '1');
 INSERT INTO `auth_rule` VALUES ('5', 'admin/auth_rule/add', '添加权限', '1', '1', '', '0', '1466686168', '4', '0-2-4', '1', '0');
@@ -93,6 +92,7 @@ INSERT INTO `auth_rule` VALUES ('13', 'admin/user/index', '用户管理', '1', '
 INSERT INTO `auth_rule` VALUES ('14', 'admin/user/edit', '编辑用户', '1', '1', '', '1466779374', '1466779374', '13', '0-2-13', '0', '0');
 INSERT INTO `auth_rule` VALUES ('15', 'admin/user/del', '删除用户', '1', '1', '', '1466779400', '1466779400', '13', '0-2-13', '0', '0');
 INSERT INTO `auth_rule` VALUES ('16', 'admin/user/add', '添加用户', '1', '1', '', '1466780028', '1466780028', '13', '0-2-13', '0', '0');
+INSERT INTO `auth_rule` VALUES ('17', 'admin/auth_rule/del', '删除权限', '1', '1', '', '1466911172', '1466911172', '4', '0-2-4', '0', '0');
 
 -- ----------------------------
 -- Table structure for ucenter_member
@@ -113,10 +113,10 @@ CREATE TABLE `ucenter_member` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of ucenter_member
 -- ----------------------------
-INSERT INTO `ucenter_member` VALUES ('1', 'admin', '8068cd602f9955a42e168bdce84d55e3', '296720094@qq.com', '18053449656', '0', '1466782283', '2130706433', '1', '0', '1466782283');
-INSERT INTO `ucenter_member` VALUES ('2', 'test', '779d005fa526b871d424fcab8140582f', '', '', '127.0.0.1', '0', '0', '1', '1466780641', '1466782238');
+INSERT INTO `ucenter_member` VALUES ('1', 'admin', '779d005fa526b871d424fcab8140582f', '296720094@qq.com', '18053449656', '0', '1466909925', '2130706433', '1', '0', '1466909925');
+INSERT INTO `ucenter_member` VALUES ('3', 'test123', '779d005fa526b871d424fcab8140582f', '', '', '127.0.0.1', '0', '0', '1', '1466910101', '1466910142');

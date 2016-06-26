@@ -16,6 +16,7 @@
                         </thead>
                         <tbody>
                             {volist name="list" id="vo"}
+                            {if condition="$vo.id neq 1"}
                             <tr>
                                 <td align="center">{$vo.id}</td>
                                 <td align="center">{$vo.username}</td>
@@ -26,11 +27,9 @@
                                     <a href="#" onclick="warning('确实要删除吗', '{:url('user/del',['id'=>$vo['id']])}')" class="btn btn-danger btn-sm shiny">
                                         <i class="fa fa-trash-o"></i> 删除
                                     </a>
-                                    <a href="{:url('auth_group/resource',['id'=>$vo['id']])}" class="btn btn-sky btn-sm shiny">
-                                        <i class="fa fa-cog"></i> 资源管理
-                                    </a>
                                 </td>
                             </tr>
+                            {/if}
                             {/volist}
                         </tbody>
                     </table>

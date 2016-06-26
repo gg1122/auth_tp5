@@ -17,7 +17,6 @@ class Base extends Controller{
 		if(!$auth->check($module . '/' . $controller  . '/' . $action, session('user_auth')['uid'])){
 			return $this->error('没有权限',url('index/index'));
 		}
-
 		if(!session('sidebar')){
 			$this->getSidebar();
 		}

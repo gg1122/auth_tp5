@@ -43,6 +43,10 @@ class AuthGroup extends Base{
 	public function edit(){
 		$authGroupModel = new AuthGroupModel;
 		if(request()->isPost()){
+			$id = input('?get.id') ? input('get.id') : '';
+			if(!$id || $id==1){
+				return $this->error('参数错误');
+			}
 			if($authGroupModel->validate(true)->save(input('post.'),['id'=>input('post.id')])){
 				return $this->success('修改成功',url('index'));
 			}else{
@@ -67,7 +71,7 @@ class AuthGroup extends Base{
 	 */
 	public function del(){
 		$id = input('?get.id') ? input('get.id') : '';
-		if(!$id){
+		if(!$id || $id == 1){
 			return $this->error('参数错误');
 		}
 		$authGroupModel = new AuthGroupModel;
@@ -87,7 +91,7 @@ class AuthGroup extends Base{
 	public function resource(){
 		if(request()->isPost()){
 			$id = input('?post.id') ? input('post.id') : '';
-			if(!$id){
+			if(!$id || $id == 1){
 				return $this->error('参数错误');
 			}
 			$resource = input('post.resource/a');
