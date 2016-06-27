@@ -127,7 +127,7 @@ class User extends Base{
 				return $this->error($res['info']);
 			}
 		}else{
-			$id = input('?get.id') ? input('get.id') : '';
+			$id = input('?param.id') ? input('param.id') : '';
 			if(!$id || $id == 1){
 				return $this->error('参数错误');
 			}
@@ -148,7 +148,7 @@ class User extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function del(){
-		$id = input('?get.id') ? input('get.id') : '';
+		$id = input('?param.id') ? input('param.id') : '';
 		if(!$id || $id == 1){
 			return $this->error('参数错误');
 		}

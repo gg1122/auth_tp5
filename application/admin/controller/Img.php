@@ -6,7 +6,7 @@ use think\Db;
 
 class Img extends Controller{
 	public function index(){
-		$id = input('?get.id') ? input('get.id') : '';
+		$id = input('?param.id') ? input('param.id') : '';
 		if(!$id){
 			return $this->error('参数错误');
 		}

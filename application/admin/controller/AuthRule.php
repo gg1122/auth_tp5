@@ -72,7 +72,7 @@ class AuthRule extends Base{
 				return $this->error($authRuleModel->getError());
 			}			
 		}else{
-			$id = input('?get.id') ? input('get.id') : '';
+			$id = input('?param.id') ? input('param.id') : '';
 			if(!$id){
 				return $this->error('参数错误');
 			}
@@ -94,7 +94,7 @@ class AuthRule extends Base{
 	 * @return   [type]                   [description]
 	 */
 	public function del(){
-		$id = input('?get.id') ? input('get.id') : '';
+		$id = input('?param.id') ? input('param.id') : '';
 		if(!$id){
 			return $this->error('参数错误');
 		}
