@@ -21,7 +21,7 @@ class UcenterMember extends Validate{
 	];
 
 	protected $scene = [
-
+		'edit'=>['username'=>'length:1,30']
 	];
 
 

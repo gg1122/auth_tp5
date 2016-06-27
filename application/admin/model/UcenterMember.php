@@ -204,7 +204,7 @@ class UcenterMember extends Model{
 		}
 
 		// 更新用户信息
-		if($this->validate(true)->save($data,['id'=>$uid])){
+		if($this->validate('UcenterMember.edit')->save($data,['id'=>$uid])){
 			return true;
 		}else{
 			return false;

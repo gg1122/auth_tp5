@@ -24,7 +24,7 @@ class AuthGroup extends Base{
 	public function add(){
 		if(request()->isPost()){
 			$authGroupModel = new AuthGroupModel;
-			if($authGroupModel->validate(true)->save(input('post.'))){
+			if($id = $authGroupModel->validate(true)->save(input('post.'))){
 				return $this->success('添加成功',url('auth_group/index'));
 			}else{
 				return $this->error($authGroupModel->getError());

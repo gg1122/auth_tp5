@@ -15,6 +15,18 @@
                             </div>
                             <p class="help-block col-sm-4 red">* 必填</p>
                         </div>
+
+
+                        <div class="form-group">
+                            <label for="group_id" class="col-sm-2 control-label no-padding-right">用户角色</label>
+                            <div class="col-sm-6">
+                                <select name="group_id" style="width: 100%;">
+                                    {volist name="authGroupData" id="vo"}
+                                    <option value="{$vo.id}" {if condition="$vo.id eq $data.group_id"}selected{/if}>{$vo.title}</option>
+                                    {/volist}
+                                </select>
+                            </div>
+                        </div>  
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <input type="hidden" name="id" value="{$data.id}">

@@ -77,15 +77,26 @@ class User extends Base{
 			if(!$username){
 				return $this->error('请填写用户名');
 			}
+			$group_id = input('?post.group_id') ? input('post.group_id') : '';
+			if(!$group_id){
+				return $this->error('请创建角色',url('auth_group/add'));
+			}
 			$user = new UserApi;
 			$res = $user->register($username, '123456');
 			if($res>0){
+				$insertData = [
+					'uid'=>$res,
+					'group_id'=>$group_id
+				];	
+				\think\Db::name('auth_group_access')->insert($insertData);
 				return $this->success('添加成功',url('index'));
 			}else{
 				return $this->error($res);
 			}
 
 		}else{
+			$authGroupData = \think\Db::name('auth_group')->field('id,title')->where('id','neq',1)->where('status',1)->select();
+			$this->assign('authGroupData',$authGroupData);
 			return view('add');
 		}
 	}
@@ -102,10 +113,15 @@ class User extends Base{
 			if(!$id || $id==1){
 				return $this->error('参数错误');
 			}
+			$group_id = input('?post.group_id') ? input('post.group_id') : '';
+			if(!$group_id){
+				return $this->error('请创建角色',url('auth_group/add'));
+			}
 			$user = new UserApi;
 			$data = ['username'=>input('post.username')];
 			$res = $user->updateInfoNotCheck($id, $data);
 			if($res['status']){
+				\think\Db::name('auth_group_access')->where('uid',$id)->update(['group_id'=>$group_id]);
 				return $this->success('修改成功',url('index'));
 			}else{
 				return $this->error($res['info']);
@@ -116,6 +132,10 @@ class User extends Base{
 				return $this->error('参数错误');
 			}
 			$data = \think\Db::name('ucenter_member')->where('id',$id)->find();
+			$group_id = \think\Db::name('auth_group_access')->where('uid', $id)->find();
+			$data['group_id'] = $group_id['group_id'];
+			$authGroupData = \think\Db::name('auth_group')->field('id,title')->where('id','neq',1)->where('status',1)->select();
+			$this->assign('authGroupData',$authGroupData);
 			$this->assign('data',$data);
 			return view('edit');
 		}
